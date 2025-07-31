@@ -1,0 +1,96 @@
+<header class="bg-transparent text-white p-4 flex justify-between items-center">
+  <a href="#" class="text-2xl font-bold">Pedro.dev</a>
+
+  <div class="relative md:hidden">
+    <button id="menu-button" class="focus:outline-none text-2xl"> ☰ </button>
+
+    <nav
+      id="dropdown-menu"
+      class="absolute right-0 mt-2 w-40 bg-[#5a3e9e] rounded shadow-lg hidden flex-col"
+    >
+      <a href="#" class="px-4 py-2 hover:bg-[#7c63b8] hover:rounded-md block"
+        >Início</a
+      >
+      <a href="#" class="px-4 py-2 hover:bg-[#7c63b8] hover:rounded-md block"
+        >Sobre mim</a
+      >
+      <a href="#" class="px-4 py-2 hover:bg-[#7c63b8] hover:rounded-md block"
+        >Contato</a
+      >
+      <a href="#" class="px-4 py-2 hover:bg-[#7c63b8] hover:rounded-md block"
+        >Projetos</a
+      >
+      <a href="#" class="px-4 py-2 hover:bg-[#7c63b8] hover:rounded-md block"
+        >Serviços</a
+      >
+      <a href="#" class="px-4 py-2 hover:bg-[#7c63b8] hover:rounded-md block"
+        >Contato</a
+      >
+    </nav>
+  </div>
+
+  <!-- Menu Desktop -->
+  <nav class="hidden md:flex gap-6">
+    <a
+      href="#"
+      class="font-medium pb-1 relative underline-animate hover:text-gray-400"
+      >Início</a
+    >
+    <a
+      href="#"
+      class="font-medium pb-1 relative underline-animate hover:text-gray-400"
+      >Sobre mim</a
+    >
+    <a
+      href="#"
+      class="font-medium pb-1 relative underline-animate hover:text-gray-400"
+      >Projetos</a
+    >
+    <a
+      href="#"
+      class="font-medium pb-1 relative underline-animate hover:text-gray-400"
+      >Serviços</a
+    >
+    <a
+      href="#"
+      class="font-medium pb-1 relative underline-animate hover:text-gray-400"
+      >Contato</a
+    >
+  </nav>
+</header>
+
+<style>
+  .underline-animate {
+    position: relative;
+  }
+
+  .underline-animate::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 0;
+    background-color: #000000;
+    transition: width 0.3s ease;
+  }
+
+  .underline-animate:hover::after {
+    width: 100%;
+  }
+</style>
+
+<script>
+  const btn = document.getElementById("menu-button");
+  const dropdown = document.getElementById("dropdown-menu");
+
+  btn?.addEventListener("click", () => {
+    dropdown?.classList.toggle("hidden");
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!btn?.contains(e.target) && !dropdown?.contains(e.target)) {
+      dropdown?.classList.add("hidden");
+    }
+  });
+</script>
