@@ -1,21 +1,135 @@
 <section
-  class="container max-w-xl mx-auto flex flex-col justify-center gap-10 items-center md:flex-row text-white mt-10 md:max-w-3xl"
+  class="container max-w-5xl mx-auto grid grid-cols-1 place-items-center gap-10 md:grid-cols-2 text-white mt-14 md:mt-20 p-4 md:px-10"
 >
-  <div class="flex flex-col justify-center items-center px-5">
-    <h1 class="text-3xl text-center font-medium">
-      Olá, eu sou<br />
-      <span class="font-bold text-[#8A75C3]">Pedro Augusto</span> Desenvolvedor Full-stack
+  <div
+    class="flex flex-col justify-center items-center px-5 md:items-start md:px-0"
+  >
+    <h1
+      class="text-3xl text-center font-medium md:text-4xl md:text-left tracking-in-expand-fwd-top"
+    >
+      Olá, eu sou
+      <span class="font-semibold text-[#8A75C3] block my-3" id="name"
+        >Pedro Augusto</span
+      >
+      <span id="dev"></span>
     </h1>
 
-    <a href="" class="flex-1 mt-5 bg-[#5A3E9E] px-8 py-3 rounded-md"
-      >Acesse o meu linkedin</a
+    <a
+      href="#"
+      class="flex-1 mt-5 bg-[#5A3E9E] px-8 py-3 rounded-md md:mt-10 md:text-center hover:bg-[#8A75C3] transition-colors duration-300 tracking-in-expand-fwd-top"
     >
+      Acesse o meu linkedin
+    </a>
   </div>
+
   <div>
     <img
-      class="w-70"
-      src="/public/assets/rocket.png"
-      alt="Imagem de um foguete indo ate a lua"
+      class="w-[200px] md:w-72 slide-in-top"
+      src="./assets/rocket.png"
+      alt="Imagem de um foguete indo até a lua"
     />
   </div>
 </section>
+
+<style>
+  .tracking-in-expand-fwd-top {
+    -webkit-animation: tracking-in-expand-fwd-top 0.8s
+      cubic-bezier(0.215, 0.61, 0.355, 1) both;
+    animation: tracking-in-expand-fwd-top 0.8s
+      cubic-bezier(0.215, 0.61, 0.355, 1) both;
+  }
+  .slide-in-top {
+    -webkit-animation: slide-in-top 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    animation: slide-in-top 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  }
+
+  /**
+ * ----------------------------------------
+ * animation slide-in-top
+ * ----------------------------------------
+ */
+  @-webkit-keyframes slide-in-top {
+    0% {
+      -webkit-transform: translateY(-1000px);
+      transform: translateY(-1000px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateY(0);
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  @keyframes slide-in-top {
+    0% {
+      -webkit-transform: translateY(-1000px);
+      transform: translateY(-1000px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateY(0);
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  /**
+ * ----------------------------------------
+ * animation tracking-in-expand-fwd-top
+ * ----------------------------------------
+ */
+  @-webkit-keyframes tracking-in-expand-fwd-top {
+    0% {
+      letter-spacing: -0.5em;
+      -webkit-transform: translateZ(-700px) translateY(-500px);
+      transform: translateZ(-700px) translateY(-500px);
+      opacity: 0;
+    }
+    40% {
+      opacity: 0.6;
+    }
+    100% {
+      -webkit-transform: translateZ(0) translateY(0);
+      transform: translateZ(0) translateY(0);
+      opacity: 1;
+    }
+  }
+  @keyframes tracking-in-expand-fwd-top {
+    0% {
+      letter-spacing: -0.5em;
+      -webkit-transform: translateZ(-700px) translateY(-500px);
+      transform: translateZ(-700px) translateY(-500px);
+      opacity: 0;
+    }
+    40% {
+      opacity: 0.6;
+    }
+    100% {
+      -webkit-transform: translateZ(0) translateY(0);
+      transform: translateZ(0) translateY(0);
+      opacity: 1;
+    }
+  }
+</style>
+<script>
+  const textDev = "Desenvolvedor Full-stack";
+  const span = document.getElementById("dev");
+
+  function type(text, element) {
+    let index = 0;
+
+    function typing() {
+      if (index < text.length) {
+        element.textContent += text.charAt(index);
+        index++;
+        setTimeout(typing, 100);
+      }
+    }
+
+    typing();
+  }
+
+  setTimeout(() => {
+    type(textDev, span);
+  }, 600);
+</script>

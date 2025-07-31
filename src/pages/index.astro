@@ -1,8 +1,13 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import SHome from "../components/S-home.astro";
+import SAbout from "../components/S-about.astro";
+import SProjects from "../components/S-projects";
 ---
 
 <BaseLayout>
   <SHome />
+  <SAbout />
+  <SProjects client:load />
+  <SAbout />
 </BaseLayout>

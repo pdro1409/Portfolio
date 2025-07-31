@@ -1,7 +1,8 @@
 @import "tailwindcss";
 
-body{
-    font-family: "Montserrat", sans-serif;
-    background-image: url(../../public/assets/Fundo.svg);
-    background-repeat: no-repeat;
+html,
+body {
+  font-family: "Montserrat", sans-serif;
+  background-image: url(../../public/assets/Fundo.svg);
+  background-repeat: no-repeat;
 }
