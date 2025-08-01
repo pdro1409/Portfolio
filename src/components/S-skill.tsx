@@ -7,7 +7,10 @@ export default function SSkill() {
   );
   return (
     <div className="bg-[#080808]">
-      <section className=" relative z-10 container max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 place-items-center gap-10 text-white mt-14 md:mt-20 p-4 md:px-10">
+      <section
+        id="skill"
+        className=" relative z-10 container max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 place-items-center gap-10 text-white mt-14 md:mt-20 p-4 md:px-10"
+      >
         <div className="hidden md:flex  flex-col min-h-[300px] justify-center items-start">
           <h2 className="text-2xl font-semibold mb-10">Conhecimentos.</h2>
           <div className="rounded-md max-w-[300px]">
