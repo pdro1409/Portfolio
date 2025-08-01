@@ -12,7 +12,7 @@ export const projects = [
     title: "Portifolio",
     description:
     "Portfólio pessoal desenvolvido com Astro e Tailwind CSS, destacando projetos com um design limpo, responsivo e moderno. Possui navegação suave, efeitos interativos e foco em performance e experiência do usuário.",
-    image: "/assets/portfolio.png",
+    image: "/assets/portfolio.jpg",
     link: "https://portfolio-jet-delta-5icu17p7ds.vercel.app/",
   },
 ];
