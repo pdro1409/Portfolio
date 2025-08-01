@@ -11,7 +11,7 @@ export const Card = () => {
           <div>
             <img src={project.image} alt="" className="w-full" />
           </div>
-          <div className="flex flex-col gap-2 mt-4  justify-center">
+          <div className="flex flex-col gap-2 mt-4  justify-center max-w-[300px] md:max-w-96">
             <h3 className="font-semibold text-2xl">{project.title}</h3>
             <p className="font-medium text-base">{project.description}</p>
             <div className="flex gap-4 mt-4">

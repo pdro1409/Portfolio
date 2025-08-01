@@ -3,11 +3,14 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import SHome from "../components/S-home.astro";
 import SAbout from "../components/S-about.astro";
 import SProjects from "../components/S-projects";
+import SSKILL from "../components/S-skill.tsx";
+import SCONTACTS from "../components/S-contact.astro";
 ---
 
 <BaseLayout>
   <SHome />
   <SAbout />
   <SProjects client:load />
-  <SAbout />
+  <SSKILL client:load />
+  <SCONTACTS />
 </BaseLayout>

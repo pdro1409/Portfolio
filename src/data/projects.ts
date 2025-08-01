@@ -15,36 +15,4 @@ export const projects = [
     image: "/assets/project-1.png",
     link: "https://pmovies-rosy.vercel.app/",
   },
-  {
-    id: 3,
-    title: "Pmovie",
-    description:
-      "App em React que exibe filmes populares da API TMDb com design responsivo, efeitos hover e visual limpo usando Tailwind CSS.",
-    image: "/assets/project-1.png",
-    link: "https://pmovies-rosy.vercel.app/",
-  },
-  {
-    id: 4,
-    title: "Pmovie",
-    description:
-      "App em React que exibe filmes populares da API TMDb com design responsivo, efeitos hover e visual limpo usando Tailwind CSS.",
-    image: "/assets/project-1.png",
-    link: "https://pmovies-rosy.vercel.app/",
-  },
-  {
-    id: 5,
-    title: "Pmovie",
-    description:
-      "App em React que exibe filmes populares da API TMDb com design responsivo, efeitos hover e visual limpo usando Tailwind CSS.",
-    image: "/assets/project-1.png",
-    link: "https://pmovies-rosy.vercel.app/",
-  },
-  {
-    id: 6,
-    title: "Pmovie",
-    description:
-      "App em React que exibe filmes populares da API TMDb com design responsivo, efeitos hover e visual limpo usando Tailwind CSS.",
-    image: "/assets/project-1.png",
-    link: "https://pmovies-rosy.vercel.app/",
-  },
 ];
