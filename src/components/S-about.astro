@@ -2,7 +2,7 @@
   id="about"
   class="container max-w-5xl mx-auto grid grid-cols-1 place-items-center gap-10 md:grid-cols-2 text-white mt-14 md:mt-20 p-4 md:px-10"
 >
-  <div>
+  <div class="slide-in-left">
     <img
       src="./assets/me.jpg"
       alt="Foto de Pedro Augusto"
@@ -10,7 +10,7 @@
     />
   </div>
   <div
-    class="flex flex-col justify-center items-center gap-4 text-center md:text-left max-w-[624px]"
+    class="flex flex-col justify-center items-center gap-4 text-center md:text-left max-w-[624px] slide-in-right"
   >
     <div class="bg-[#5A3E9E40] px-8 py-3 rounded-md">🧐 Sobre mim</div>
     <h2 class="text-2xl font-semibold text-[#8A75C3]">Pedro Augusto</h2>
@@ -22,3 +22,75 @@
     </p>
   </div>
 </section>
+
+<style>
+  .slide-in-left {
+    -webkit-animation: slide-in-left 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+      both;
+    animation: slide-in-left 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  }
+  .slide-in-right {
+    -webkit-animation: slide-in-right 1s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+      both;
+    animation: slide-in-right 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  }
+
+  /**
+ * ----------------------------------------
+ * animation slide-in-left
+ * ----------------------------------------
+ */
+  @-webkit-keyframes slide-in-left {
+    0% {
+      -webkit-transform: translateX(-1000px);
+      transform: translateX(-1000px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateX(0);
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  @keyframes slide-in-left {
+    0% {
+      -webkit-transform: translateX(-1000px);
+      transform: translateX(-1000px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateX(0);
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  /**
+ * ----------------------------------------
+ * animation slide-in-right
+ * ----------------------------------------
+ */
+  @-webkit-keyframes slide-in-right {
+    0% {
+      -webkit-transform: translateX(1000px);
+      transform: translateX(1000px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateX(0);
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  @keyframes slide-in-right {
+    0% {
+      -webkit-transform: translateX(1000px);
+      transform: translateX(1000px);
+      opacity: 0;
+    }
+    100% {
+      -webkit-transform: translateX(0);
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+</style>
