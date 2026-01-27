@@ -10,7 +10,7 @@
 ## 🌐 Link ao vivo
 
 Confira o site no ar:  
-➡️ [https://portfolio-jet-delta-5icu17p7ds.vercel.app](https://portfolio-jet-delta-5icu17p7ds.vercel.app)
+➡️ [https://devpdro.com.br]((https://devpdro.com.br))
 
 ---
 
@@ -51,27 +51,15 @@ npm install
 npm run dev
 Acesse http://localhost:3000 no navegador para ver o site rodando.
 
-🤝 Como contribuir
-Contribuições são super bem-vindas!
 
-Faça um fork do projeto
-
-Crie uma branch para sua feature (git checkout -b minha-feature)
-
-Commit suas mudanças (git commit -m 'Minha feature')
-
-Faça push para sua branch (git push origin minha-feature)
-
-Abra um Pull Request neste repositório
 
 📫 Contato
 Entre em contato comigo através das redes:
 
-Email: seuemail@exemplo.com
+Email: panuness1010@gmail.com
 
-LinkedIn: linkedin.com/in/seuusuario
+LinkedIn: linkedin.com/in/pdro1409
 
-Twitter: @seutwitter
 
 📄 Licença
 Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
