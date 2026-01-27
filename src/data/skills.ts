@@ -62,4 +62,11 @@ export const skills = [
       "Astro é um framework moderno que combina diversos frameworks (como React, Vue, Svelte) para criar sites rápidos e otimizados, com foco em performance e carregamento apenas do necessário.",
     image: "/assets/icons/astro-icon.svg",
   },
+  {
+    id: 10,
+    name: "PHP",
+    description:
+      "PHP é uma linguagem de programação voltada para o desenvolvimento web que roda no lado do servidor, sendo usada para criar sites e aplicações dinâmicas. É amplamente compatível com bancos de dados e frameworks modernos, com foco em produtividade, flexibilidade e construção de sistemas robustos e escaláveis.",
+    image: "/assets/icons/php-icon.svg",
+  },
 ];

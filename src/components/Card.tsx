@@ -21,7 +21,7 @@ export const Card = () => {
             <p className="text-sm text-gray-300">{project.description}</p>
 
             <div className="flex justify-center gap-6 mt-4">
-              <a href={project.link} target="_blank" rel="noopener noreferrer">
+              <a href={project.linkGit} target="_blank" rel="noopener noreferrer">
                 <img
                   src="/assets/git-icon.svg"
                   alt="Ver código"
