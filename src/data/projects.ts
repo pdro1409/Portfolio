@@ -25,5 +25,13 @@ export const projects = [
   linkGit: "https://github.com/pdro1409/lplawyer",
   link: "https://advogado.devpdro.com.br/",
 },
+{
+  id: 4,
+  title: "CRM MaquinIA",
+  description:
+    "Landing page institucional para escritório de advocacia, desenvolvida com foco em conversão, clareza de informações e credibilidade. O projeto apresenta layout profissional, design responsivo, seções estratégicas de serviços e chamada para contato direto.",
+  image: "/assets/lplawyer.png",
+  link: "https://os.maquinia.com.br/",
+},
 
 ];
