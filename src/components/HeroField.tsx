@@ -3,8 +3,19 @@ import { useEffect, useRef } from "react";
 const COR_TINTA = 0x1a1d1a;
 const COR_SINAL = 0x2b3fd9;
 
+const LINHAS = 34;
+const PONTOS = 96;
+const LARGURA = 30;
+const ALTURA = 15;
+
+/** Altura do relevo levantado pelo cursor, em unidades de cena. */
+const AMPLITUDE = 1.15;
+/** Raio de influência do cursor. Maior = morro mais largo e suave. */
+const RAIO = 3.4;
+
 /**
- * Malha de pontos que se inclina conforme o cursor, atrás do hero.
+ * Curvas de nível atrás do hero: linhas horizontais que se abrem ao redor
+ * do cursor, como o relevo de um mapa topográfico.
  *
  * É decoração: fica atrás do conteúdo, com aria-hidden, e não carrega em
  * tela pequena nem para quem pediu menos movimento. O import do three é
@@ -32,8 +43,9 @@ export default function HeroField() {
       const altura = alvo.clientHeight;
 
       const cena = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(60, largura / altura, 0.1, 100);
-      camera.position.z = 14;
+      const camera = new THREE.PerspectiveCamera(55, largura / altura, 0.1, 100);
+      camera.position.set(0, -1.5, 15);
+      camera.lookAt(0, 0, 0);
 
       const renderer = new THREE.WebGLRenderer({
         alpha: true,
@@ -41,58 +53,58 @@ export default function HeroField() {
         powerPreference: "low-power",
       });
       renderer.setSize(largura, altura);
-      // Acima de 2 o ganho visual some e o custo de GPU dobra.
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       alvo.appendChild(renderer.domElement);
 
-      // Grade de pontos no plano XY, com profundidade em ondas.
-      const COLUNAS = 46;
-      const LINHAS = 26;
-      const ESPACO = 0.62;
-      const total = COLUNAS * LINHAS;
+      const grupo = new THREE.Group();
+      cena.add(grupo);
 
-      const posicoes = new Float32Array(total * 3);
-      const cores = new Float32Array(total * 3);
-      const tinta = new THREE.Color(COR_TINTA);
-      const sinal = new THREE.Color(COR_SINAL);
+      const curvas: {
+        geometria: InstanceType<typeof THREE.BufferGeometry>;
+        yBase: number;
+      }[] = [];
+      const descartaveis: { dispose: () => void }[] = [];
 
-      for (let i = 0; i < COLUNAS; i++) {
-        for (let j = 0; j < LINHAS; j++) {
-          const indice = i * LINHAS + j;
-          posicoes[indice * 3] = (i - COLUNAS / 2) * ESPACO;
-          posicoes[indice * 3 + 1] = (j - LINHAS / 2) * ESPACO;
-          posicoes[indice * 3 + 2] = 0;
+      for (let i = 0; i < LINHAS; i++) {
+        const yBase = (i / (LINHAS - 1) - 0.5) * ALTURA;
+        const posicoes = new Float32Array(PONTOS * 3);
 
-          // Poucos pontos recebem o azul: o destaque vira exceção, não padrão.
-          const cor = Math.random() > 0.88 ? sinal : tinta;
-          cores[indice * 3] = cor.r;
-          cores[indice * 3 + 1] = cor.g;
-          cores[indice * 3 + 2] = cor.b;
+        for (let j = 0; j < PONTOS; j++) {
+          posicoes[j * 3] = (j / (PONTOS - 1) - 0.5) * LARGURA;
+          posicoes[j * 3 + 1] = yBase;
+          posicoes[j * 3 + 2] = 0;
         }
+
+        const geometria = new THREE.BufferGeometry();
+        geometria.setAttribute(
+          "position",
+          new THREE.BufferAttribute(posicoes, 3),
+        );
+
+        // Uma linha a cada sete recebe o azul: o destaque marca ritmo,
+        // não vira padrão.
+        const destaque = i % 7 === 3;
+        const material = new THREE.LineBasicMaterial({
+          color: destaque ? COR_SINAL : COR_TINTA,
+          transparent: true,
+          opacity: destaque ? 0.3 : 0.16,
+        });
+
+        grupo.add(new THREE.Line(geometria, material));
+        curvas.push({ geometria, yBase });
+        descartaveis.push(geometria, material);
       }
 
-      const geometria = new THREE.BufferGeometry();
-      geometria.setAttribute("position", new THREE.BufferAttribute(posicoes, 3));
-      geometria.setAttribute("color", new THREE.BufferAttribute(cores, 3));
-
-      const material = new THREE.PointsMaterial({
-        size: 0.075,
-        vertexColors: true,
-        transparent: true,
-        opacity: 0.5,
-        sizeAttenuation: true,
-      });
-
-      const pontos = new THREE.Points(geometria, material);
-      cena.add(pontos);
-
+      // Cursor em coordenadas de cena, seguido com atraso.
       const cursor = { x: 0, y: 0 };
       const suave = { x: 0, y: 0 };
 
       const aoMover = (evento: PointerEvent) => {
         const caixa = alvo.getBoundingClientRect();
-        cursor.x = ((evento.clientX - caixa.left) / caixa.width) * 2 - 1;
-        cursor.y = ((evento.clientY - caixa.top) / caixa.height) * 2 - 1;
+        const nx = (evento.clientX - caixa.left) / caixa.width - 0.5;
+        const ny = 0.5 - (evento.clientY - caixa.top) / caixa.height;
+        cursor.x = nx * LARGURA;
+        cursor.y = ny * ALTURA;
       };
       window.addEventListener("pointermove", aoMover, { passive: true });
 
@@ -117,28 +129,41 @@ export default function HeroField() {
 
       let quadro = 0;
       const relogio = new THREE.Clock();
+      const doisRaioAoQuadrado = 2 * RAIO * RAIO;
 
       const desenhar = () => {
         quadro = requestAnimationFrame(desenhar);
         if (!visivel) return;
 
         const t = relogio.getElapsedTime();
+        suave.x += (cursor.x - suave.x) * 0.05;
+        suave.y += (cursor.y - suave.y) * 0.05;
 
-        // O cursor é seguido com atraso: o movimento fica fluido, não nervoso.
-        suave.x += (cursor.x - suave.x) * 0.045;
-        suave.y += (cursor.y - suave.y) * 0.045;
+        for (const { geometria, yBase } of curvas) {
+          const atributo = geometria.attributes
+            .position as InstanceType<typeof THREE.BufferAttribute>;
+          const dy = yBase - suave.y;
 
-        const atributo = geometria.attributes.position as THREE.BufferAttribute;
-        for (let i = 0; i < total; i++) {
-          const x = atributo.getX(i);
-          const y = atributo.getY(i);
-          const distancia = Math.hypot(x - suave.x * 9, y - suave.y * 5);
-          atributo.setZ(i, Math.sin(distancia * 0.7 - t * 1.1) * 0.62);
+          for (let j = 0; j < PONTOS; j++) {
+            const x = atributo.getX(j);
+            const dx = x - suave.x;
+
+            // Morro gaussiano sob o cursor: as linhas se afastam dele.
+            const relevo =
+              AMPLITUDE *
+              Math.exp(-(dx * dx + dy * dy) / doisRaioAoQuadrado);
+
+            // Ondulação lenta de fundo, para a cena respirar parada.
+            const respiro = Math.sin(x * 0.22 + yBase * 0.32 + t * 0.42) * 0.16;
+
+            atributo.setY(j, yBase + relevo + respiro);
+          }
+          atributo.needsUpdate = true;
         }
-        atributo.needsUpdate = true;
 
-        pontos.rotation.x = suave.y * 0.14;
-        pontos.rotation.y = suave.x * 0.2;
+        // Inclinação sutil, para o relevo ler como superfície e não como grade.
+        grupo.rotation.x = -0.42 + suave.y * 0.012;
+        grupo.rotation.z = suave.x * 0.006;
 
         renderer.render(cena, camera);
       };
@@ -149,8 +174,7 @@ export default function HeroField() {
         observador.disconnect();
         window.removeEventListener("pointermove", aoMover);
         window.removeEventListener("resize", aoRedimensionar);
-        geometria.dispose();
-        material.dispose();
+        for (const item of descartaveis) item.dispose();
         renderer.dispose();
         renderer.domElement.remove();
       };
