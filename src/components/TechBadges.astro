@@ -1,0 +1,66 @@
+---
+import fs from "node:fs";
+import path from "node:path";
+import type { Tech } from "../data/content";
+
+interface Props {
+  items: Tech[];
+  /** "grande" para a stack principal, "pequeno" para a secundária. */
+  escala?: "grande" | "pequeno";
+}
+
+const { items, escala = "grande" } = Astro.props;
+
+const pastaIcones = path.join(process.cwd(), "public", "assets", "icons");
+
+/**
+ * Só renderiza o <img> se o SVG existir de fato. Sem isso, um slug faltando
+ * viraria um ícone quebrado na página em vez de um badge só com o nome.
+ */
+const temIcone = (slug?: string) =>
+  Boolean(slug) && fs.existsSync(path.join(pastaIcones, `${slug}.svg`));
+
+const badges = items.map((item) => ({
+  ...item,
+  iconeDisponivel: temIcone(item.icon),
+}));
+
+const grande = escala === "grande";
+---
+
+<ul class="flex flex-wrap gap-2.5">
+  {
+    badges.map((tech) => (
+      <li
+        class:list={[
+          "inline-flex items-center gap-2 border border-paper-edge bg-paper-deep",
+          grande ? "px-3.5 py-2.5" : "px-3 py-2",
+        ]}
+      >
+        {tech.iconeDisponivel && (
+          <img
+            src={`/assets/icons/${tech.icon}.svg`}
+            alt=""
+            aria-hidden="true"
+            width={grande ? 22 : 18}
+            height={grande ? 22 : 18}
+            loading="lazy"
+            decoding="async"
+            class:list={[
+              "shrink-0",
+              grande ? "h-[22px] w-[22px]" : "h-[18px] w-[18px]",
+            ]}
+          />
+        )}
+        <span
+          class:list={[
+            "font-medium whitespace-nowrap",
+            grande ? "text-[0.95rem]" : "text-sm text-ink-soft",
+          ]}
+        >
+          {tech.name}
+        </span>
+      </li>
+    ))
+  }
+</ul>

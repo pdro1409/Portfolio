@@ -1,0 +1,49 @@
+---
+import { getContent, type Locale } from "../data/content";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getContent(locale);
+---
+
+<section id="sobre" class="px-6 py-16 md:px-10 md:py-24">
+  <div class="mx-auto max-w-5xl">
+    <h2 class="text-3xl font-semibold tracking-[-0.02em] md:text-4xl">
+      {t.about.title}
+    </h2>
+
+    <div class="mt-10 grid gap-10 md:grid-cols-[17rem_1fr] md:gap-14">
+      <div class="space-y-8">
+        <div>
+          <p class="text-sm text-ink-faint">{t.about.education.label}</p>
+          <p class="mt-1.5 font-semibold">{t.about.education.degree}</p>
+          <p class="mt-0.5 text-sm text-ink-soft">{t.about.education.school}</p>
+          <p class="mt-0.5 text-sm text-ink-faint">
+            {t.about.education.period}
+          </p>
+        </div>
+
+        <div>
+          <p class="text-sm text-ink-faint">{t.about.languages.label}</p>
+          <ul class="mt-1.5 space-y-1">
+            {
+              t.about.languages.items.map((idioma) => (
+                <li class="text-sm">
+                  <span class="font-semibold">{idioma.name}</span>
+                  <span class="text-ink-soft">, {idioma.level}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        {t.about.body.map((paragrafo) => <p class="prosa mb-4 last:mb-0">{paragrafo}</p>)}
+      </div>
+    </div>
+  </div>
+</section>

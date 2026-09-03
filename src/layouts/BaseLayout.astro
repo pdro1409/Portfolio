@@ -1,26 +1,101 @@
 ---
 import "../styles/global.css";
 import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { getContent, PROFILE, type Locale } from "../data/content";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getContent(locale);
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL("/og.png", Astro.site).href;
+
+// Perfil estruturado: ajuda o Google a entender que a página é sobre uma pessoa.
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: PROFILE.name,
+  jobTitle:
+    locale === "pt" ? "Desenvolvedor Full Stack" : "Full Stack Developer",
+  email: `mailto:${PROFILE.email}`,
+  url: PROFILE.domain,
+  sameAs: [PROFILE.linkedin, PROFILE.github],
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Goiânia",
+    addressRegion: "GO",
+    addressCountry: "BR",
+  },
+  knowsAbout: t.stack.primary,
+};
 ---
 
-<html lang="pt-BR">
+<!doctype html>
+<html lang={locale === "pt" ? "pt-BR" : "en"}>
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.png" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
     <meta name="generator" content={Astro.generator} />
+
+    <title>{t.meta.title}</title>
+    <meta name="description" content={t.meta.description} />
+    <meta name="author" content={PROFILE.name} />
+    <link rel="canonical" href={canonical} />
+
+    <link rel="alternate" hreflang="pt-BR" href={new URL("/", Astro.site).href} />
+    <link rel="alternate" hreflang="en" href={new URL("/en/", Astro.site).href} />
+    <link
+      rel="alternate"
+      hreflang="x-default"
+      href={new URL("/", Astro.site).href}
+    />
+
+    <meta property="og:type" content="profile" />
+    <meta property="og:site_name" content="devpdro" />
+    <meta property="og:title" content={t.meta.title} />
+    <meta property="og:description" content={t.meta.description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={t.meta.ogAlt} />
+    <meta property="og:locale" content={locale === "pt" ? "pt_BR" : "en_US"} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={t.meta.title} />
+    <meta name="twitter:description" content={t.meta.description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <meta name="theme-color" content="#edede7" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap"
       rel="stylesheet"
     />
-    <title>devPdro</title>
+
+    <script type="application/ld+json" set:html={JSON.stringify(personJsonLd)} />
   </head>
-  <body class="bg-[#050505] scroll-smooth h-full p-0 m-0">
-    <Header />
-    <main>
+
+  <body class="bg-paper text-ink antialiased">
+    <a
+      href="#conteudo"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:rounded-md focus:bg-signal focus:px-4 focus:py-2 focus:font-semibold focus:text-paper"
+    >
+      {t.nav.skip}
+    </a>
+
+    <Header locale={locale} />
+
+    <main id="conteudo">
       <slot />
     </main>
+
+    <Footer locale={locale} />
+
   </body>
 </html>

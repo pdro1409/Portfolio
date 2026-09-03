@@ -1,0 +1,57 @@
+---
+import CopyEmail from "./CopyEmail.tsx";
+import { getContent, PROFILE, type Locale } from "../data/content";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getContent(locale);
+---
+
+<section id="contato" class="px-6 py-16 md:px-10 md:py-28">
+  <div class="mx-auto max-w-5xl">
+    <h2
+      class="max-w-[16ch] text-4xl font-semibold tracking-[-0.025em] text-balance md:text-6xl"
+    >
+      {t.contact.title}
+    </h2>
+
+    <p class="prosa mt-6">{t.contact.lead}</p>
+
+    <div class="mt-9 flex flex-wrap items-center gap-x-5 gap-y-3">
+      <a
+        href={`mailto:${PROFILE.email}`}
+        id="texto-email"
+        class="link-tinta text-xl font-medium break-all md:text-2xl"
+      >
+        {PROFILE.email}
+      </a>
+      <CopyEmail
+        client:visible
+        email={PROFILE.email}
+        copyLabel={t.contact.copy}
+        copiedLabel={t.contact.copied}
+      />
+    </div>
+
+    <div class="mt-10 flex flex-wrap items-center gap-x-7 gap-y-4">
+      <a href={PROFILE.resume} download class="botao-carimbo">
+        {t.contact.resume}
+      </a>
+      <a
+        href={PROFILE.linkedin}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="link-tinta font-medium">LinkedIn</a
+      >
+      <a
+        href={PROFILE.github}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="link-tinta font-medium">GitHub</a
+      >
+    </div>
+  </div>
+</section>

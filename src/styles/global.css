@@ -1,9 +1,143 @@
 @import "tailwindcss";
 
-html,
-body {
-  font-family: "Montserrat", sans-serif;
-  background-image: url(/assets/Fundo.svg);
-  background-repeat: no-repeat;
-  scroll-behavior: smooth;
+@theme {
+  /* Papel sálvia pálido — nem branco de app, nem creme editorial. */
+  --color-paper: #edede7;
+  --color-paper-deep: #e3e3db;
+  --color-paper-edge: #d3d4c9;
+
+  /* Tinta com fundo verde, para casar com o papel. */
+  --color-ink: #1a1d1a;
+  --color-ink-soft: #4a4f49;
+  --color-ink-faint: #797e77;
+
+  /* Um único sinal: ultramarino de carimbo. */
+  --color-signal: #2b3fd9;
+  --color-signal-deep: #1c2ba3;
+
+  /* Grotesca com caráter nos títulos; serifa na prosa. */
+  --font-display: "Familjen Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-prose: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-sans: "Familjen Grotesk", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+    background-color: var(--color-paper);
+    color-scheme: light;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* A prosa é serifada e respira mais que o sans. */
+  .prosa {
+    font-family: var(--font-prose);
+    font-size: 1.0625rem;
+    line-height: 1.72;
+    color: var(--color-ink-soft);
+    max-width: 68ch;
+  }
+
+  @media (min-width: 768px) {
+    .prosa {
+      font-size: 1.125rem;
+    }
+  }
+
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background-color: var(--color-signal);
+    color: var(--color-paper);
+  }
+}
+
+@layer components {
+  /*
+   * Link de texto: sublinhado fino que engrossa no hover.
+   * Sem seta, sem botão, sem caixa.
+   */
+  .link-tinta {
+    color: var(--color-ink);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.28em;
+    text-decoration-color: var(--color-paper-edge);
+    transition:
+      color 0.18s ease,
+      text-decoration-color 0.18s ease;
+  }
+
+  .link-tinta:hover {
+    color: var(--color-signal);
+    text-decoration-color: var(--color-signal);
+  }
+
+  /* O único bloco sólido da página. Usado uma vez por seção, no máximo. */
+  .botao-carimbo {
+    display: inline-block;
+    background-color: var(--color-signal);
+    color: var(--color-paper);
+    padding: 0.7rem 1.35rem;
+    font-weight: 600;
+    transition: background-color 0.18s ease;
+  }
+
+  .botao-carimbo:hover {
+    background-color: var(--color-signal-deep);
+  }
+}
+
+/*
+ * Uma única entrada, no carregamento do hero. Nada de reveal por scroll.
+ */
+@keyframes surgir {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.entrada {
+  animation: surgir 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.entrada-2 {
+  animation-delay: 0.1s;
+}
+
+.entrada-3 {
+  animation-delay: 0.2s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .entrada {
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+  }
 }

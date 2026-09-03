@@ -1,0 +1,31 @@
+---
+import TechBadges from "./TechBadges.astro";
+import { getContent, type Locale } from "../data/content";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getContent(locale);
+---
+
+<section id="ferramentas" class="px-6 py-16 md:px-10 md:py-24">
+  <div class="mx-auto max-w-5xl">
+    <h2 class="text-3xl font-semibold tracking-[-0.02em] md:text-4xl">
+      {t.stack.title}
+    </h2>
+
+    <div class="mt-10 grid gap-6 md:grid-cols-[17rem_1fr] md:gap-14">
+      <p class="text-sm text-ink-faint">{t.stack.lead}</p>
+      <TechBadges items={t.stack.primary} escala="grande" />
+    </div>
+
+    <div
+      class="mt-10 grid gap-6 border-t border-paper-edge pt-10 md:grid-cols-[17rem_1fr] md:gap-14"
+    >
+      <p class="text-sm text-ink-faint">{t.stack.secondaryLead}</p>
+      <TechBadges items={t.stack.secondary} escala="pequeno" />
+    </div>
+  </div>
+</section>

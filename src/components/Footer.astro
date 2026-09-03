@@ -1,0 +1,27 @@
+---
+import { getContent, PROFILE, type Locale } from "../data/content";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getContent(locale);
+const ano = new Date().getFullYear();
+---
+
+<footer class="border-t border-paper-edge px-6 py-8 md:px-10">
+  <div
+    class="mx-auto flex max-w-5xl flex-col gap-2 text-sm text-ink-faint sm:flex-row sm:items-center sm:justify-between"
+  >
+    <p>{ano} {PROFILE.name}. {t.footer.note}</p>
+    <a
+      href={PROFILE.source}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="link-tinta"
+    >
+      {t.footer.source}
+    </a>
+  </div>
+</footer>
