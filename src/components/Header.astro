@@ -1,105 +1,108 @@
-<header
-  class="container max-w-5xl mx-auto flex justify-between items-center text-white p-4 md:px-10"
->
-  <a href="#" class="text-2xl font-bold"
-    >dev<span class="text-[#8A75C3]">.</span>pdro</a
+---
+import { getContent, type Locale } from "../data/content";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getContent(locale);
+
+const links = [
+  { href: "#trabalhos", label: t.nav.work },
+  { href: "#trajetoria", label: t.nav.path },
+  { href: "#ferramentas", label: t.nav.tools },
+  { href: "#contato", label: t.nav.contact },
+];
+
+const outraLingua = locale === "pt" ? "/en/" : "/";
+---
+
+<header class="sticky top-0 z-50 bg-paper/90 backdrop-blur-sm">
+  <div
+    class="mx-auto flex h-16 max-w-5xl items-center justify-between px-6 md:px-10"
   >
-
-  <div class="relative md:hidden">
-    <button id="menu-button" class="focus:outline-none text-2xl"> ☰ </button>
-
-    <nav
-      id="dropdown-menu"
-      class="absolute right-0 mt-2 w-40 bg-[#5a3e9e] rounded shadow-lg hidden flex-col"
+    <a
+      href={locale === "pt" ? "/" : "/en/"}
+      class="font-semibold tracking-[-0.02em]"
     >
+      Pedro Augusto
+    </a>
+
+    <nav class="hidden items-center gap-7 md:flex">
+      {
+        links.map((link) => (
+          <a href={link.href} class="link-tinta text-sm">
+            {link.label}
+          </a>
+        ))
+      }
       <a
-        href="#home"
-        class="px-4 py-2 hover:bg-[#7c63b8] hover:rounded-md block">Início</a
+        href={outraLingua}
+        class="text-sm text-ink-faint transition-colors hover:text-signal"
+        aria-label={t.nav.otherLangAria}
       >
-      <a
-        href="#about"
-        class="px-4 py-2 hover:bg-[#7c63b8] hover:rounded-md block">Sobre mim</a
-      >
-      <a
-        href="#contact"
-        class="px-4 py-2 hover:bg-[#7c63b8] hover:rounded-md block">Contato</a
-      >
-      <a
-        href="#projects"
-        class="px-4 py-2 hover:bg-[#7c63b8] hover:rounded-md block">Projetos</a
-      >
-      <a
-        href="#skills"
-        class="px-4 py-2 hover:bg-[#7c63b8] hover:rounded-md block">Skills</a
-      >
-      <a href="#" class="px-4 py-2 hover:bg-[#7c63b8] hover:rounded-md block"
-        >Contato</a
-      >
+        {t.nav.otherLang}
+      </a>
     </nav>
+
+    <div class="flex items-center gap-4 md:hidden">
+      <a
+        href={outraLingua}
+        class="text-sm text-ink-faint"
+        aria-label={t.nav.otherLangAria}
+      >
+        {t.nav.otherLang}
+      </a>
+      <button
+        id="botao-menu"
+        type="button"
+        class="text-sm font-medium underline decoration-paper-edge underline-offset-4"
+        aria-expanded="false"
+        aria-controls="menu-mobile"
+      >
+        {t.nav.menu}
+      </button>
+    </div>
   </div>
 
-  <!-- Menu Desktop -->
-  <nav class="hidden md:flex gap-6">
-    <a
-      href="#home"
-      class="font-medium pb-1 relative underline-animate hover:text-gray-400"
-      >Início</a
-    >
-    <a
-      href="#about"
-      class="font-medium pb-1 relative underline-animate hover:text-gray-400"
-      >Sobre mim</a
-    >
-    <a
-      href="#projects"
-      class="font-medium pb-1 relative underline-animate hover:text-gray-400"
-      >Projetos</a
-    >
-    <a
-      href="#skill"
-      class="font-medium pb-1 relative underline-animate hover:text-gray-400"
-      >Skills</a
-    >
-    <a
-      href="#contact"
-      class="font-medium pb-1 relative underline-animate hover:text-gray-400"
-      >Contato</a
-    >
+  <nav
+    id="menu-mobile"
+    class="hidden border-t border-paper-edge bg-paper px-6 pb-3 md:hidden"
+  >
+    {
+      links.map((link) => (
+        <a
+          href={link.href}
+          class="block border-b border-paper-edge py-3 text-sm last:border-0"
+        >
+          {link.label}
+        </a>
+      ))
+    }
   </nav>
 </header>
 
-<style>
-  .underline-animate {
-    position: relative;
-  }
-
-  .underline-animate::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    height: 2px;
-    width: 0;
-    background-color: #000000;
-    transition: width 0.3s ease;
-  }
-
-  .underline-animate:hover::after {
-    width: 100%;
-  }
-</style>
-
 <script>
-  const btn = document.getElementById("menu-button");
-  const dropdown = document.getElementById("dropdown-menu");
+  const botao = document.getElementById("botao-menu");
+  const menu = document.getElementById("menu-mobile");
 
-  btn?.addEventListener("click", () => {
-    dropdown?.classList.toggle("hidden");
+  const fechar = () => {
+    menu?.classList.add("hidden");
+    botao?.setAttribute("aria-expanded", "false");
+  };
+
+  botao?.addEventListener("click", () => {
+    const aberto = botao.getAttribute("aria-expanded") === "true";
+    menu?.classList.toggle("hidden", aberto);
+    botao.setAttribute("aria-expanded", String(!aberto));
   });
 
-  document.addEventListener("click", (e) => {
-    if (!btn?.contains(e.target) && !dropdown?.contains(e.target)) {
-      dropdown?.classList.add("hidden");
-    }
+  menu?.addEventListener("click", (evento) => {
+    if ((evento.target as HTMLElement).closest("a")) fechar();
+  });
+
+  document.addEventListener("keydown", (evento) => {
+    if (evento.key === "Escape") fechar();
   });
 </script>

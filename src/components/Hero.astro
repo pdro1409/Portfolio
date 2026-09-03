@@ -1,0 +1,61 @@
+---
+import { getContent, PROFILE, type Locale } from "../data/content";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getContent(locale);
+---
+
+<section id="inicio" class="px-6 pt-28 pb-20 md:px-10 md:pt-36 md:pb-28">
+  <div
+    class="mx-auto grid max-w-5xl items-end gap-10 md:grid-cols-[17rem_1fr] md:gap-14"
+  >
+    <div class="entrada">
+      <img
+        src="/assets/me.jpg"
+        alt={t.hero.photoAlt}
+        width="544"
+        height="680"
+        fetchpriority="high"
+        decoding="async"
+        class="w-44 object-cover object-top md:w-full"
+        style="aspect-ratio: 4 / 5;"
+      />
+    </div>
+
+    <div>
+      <h1
+        class="entrada entrada-2 max-w-[18ch] text-[2.6rem] leading-[1.04] font-semibold tracking-[-0.025em] text-balance md:text-[3.9rem]"
+      >
+        {t.hero.statement}
+      </h1>
+
+      <p class="prosa entrada entrada-3 mt-8">{t.hero.intro}</p>
+
+      <div class="entrada entrada-3 mt-9 flex flex-wrap items-center gap-x-7 gap-y-4">
+        <a href={PROFILE.resume} download class="botao-carimbo">
+          {t.hero.resume}
+        </a>
+        <a
+          href={PROFILE.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="link-tinta font-medium"
+        >
+          {t.hero.linkedin}
+        </a>
+        <a
+          href={PROFILE.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="link-tinta font-medium"
+        >
+          GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

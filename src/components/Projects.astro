@@ -1,0 +1,85 @@
+---
+import { getContent, type Locale } from "../data/content";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getContent(locale);
+---
+
+<section id="trabalhos" class="px-6 py-16 md:px-10 md:py-24">
+  <div class="mx-auto max-w-5xl">
+    <h2 class="text-3xl font-semibold tracking-[-0.02em] md:text-4xl">
+      {t.projects.title}
+    </h2>
+    <p class="prosa mt-3">{t.projects.lead}</p>
+
+    <div class="mt-14 space-y-20 md:space-y-28">
+      {
+        t.projects.items.map((project) => (
+          <article>
+            <img
+              src={project.image}
+              alt={project.imageAlt}
+              width="1200"
+              height="750"
+              loading="lazy"
+              decoding="async"
+              class="w-full border border-paper-edge object-cover"
+              style="aspect-ratio: 16 / 10;"
+            />
+
+            <div class="mt-7 grid gap-6 md:grid-cols-[17rem_1fr] md:gap-14">
+              <div>
+                <h3 class="text-xl font-semibold tracking-[-0.015em]">
+                  {project.title}
+                </h3>
+                <p class="mt-1 text-sm text-ink-faint">{project.context}</p>
+
+                <p class="mt-4 text-sm leading-relaxed text-ink-faint">
+                  {project.stack.join(", ")}
+                </p>
+
+                <div class="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm font-medium">
+                  {project.live && (
+                    <a
+                      href={project.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="link-tinta"
+                    >
+                      {t.projects.live}
+                    </a>
+                  )}
+                  {project.repo && (
+                    <a
+                      href={project.repo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="link-tinta"
+                    >
+                      {t.projects.code}
+                    </a>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                {project.story.map((paragrafo) => (
+                  <p class="prosa mt-0 mb-4 last:mb-0">{paragrafo}</p>
+                ))}
+                {project.closedSource && (
+                  <p class="mt-5 text-sm text-ink-faint">
+                    {project.closedSource}
+                  </p>
+                )}
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

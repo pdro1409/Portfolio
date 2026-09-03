@@ -1,0 +1,40 @@
+---
+import { getContent, type Locale } from "../data/content";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = getContent(locale);
+---
+
+<section id="trajetoria" class="px-6 py-16 md:px-10 md:py-24">
+  <div class="mx-auto max-w-5xl">
+    <h2 class="text-3xl font-semibold tracking-[-0.02em] md:text-4xl">
+      {t.experience.title}
+    </h2>
+    <p class="prosa mt-3">{t.experience.lead}</p>
+
+    <div class="mt-14">
+      {
+        t.experience.items.map((job) => (
+          <div class="grid gap-4 border-t border-paper-edge py-9 md:grid-cols-[17rem_1fr] md:gap-14">
+            <div>
+              <p class="text-sm text-ink-faint">{job.period}</p>
+              <h3 class="mt-1.5 font-semibold">{job.company}</h3>
+              <p class="mt-0.5 text-sm text-ink-soft">{job.role}</p>
+            </div>
+
+            <div>
+              {job.story.map((paragrafo) => (
+                <p class="prosa mb-4 last:mb-0">{paragrafo}</p>
+              ))}
+              <p class="mt-4 text-sm text-ink-faint">{job.stack.join(", ")}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

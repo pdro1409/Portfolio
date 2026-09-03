@@ -1,16 +1,20 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import SHome from "../components/S-home.astro";
-import SAbout from "../components/S-about.astro";
-import SProjects from "../components/S-projects";
-import SSKILL from "../components/S-skill.tsx";
-import SCONTACTS from "../components/S-contact.astro";
+import Hero from "../components/Hero.astro";
+import Projects from "../components/Projects.astro";
+import Experience from "../components/Experience.astro";
+import Stack from "../components/Stack.astro";
+import About from "../components/About.astro";
+import Contact from "../components/Contact.astro";
+
+const locale = "pt" as const;
 ---
 
-<BaseLayout>
-  <SHome />
-  <SAbout />
-  <SProjects client:load />
-  <SSKILL client:load />
-  <SCONTACTS />
+<BaseLayout locale={locale}>
+  <Hero locale={locale} />
+  <Projects locale={locale} />
+  <Experience locale={locale} />
+  <Stack locale={locale} />
+  <About locale={locale} />
+  <Contact locale={locale} />
 </BaseLayout>
