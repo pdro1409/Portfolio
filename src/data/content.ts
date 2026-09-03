@@ -50,6 +50,7 @@ export type Content = {
   };
   projects: { title: string; lead: string; items: Project[]; live: string; code: string };
   experience: { title: string; lead: string; items: Job[] };
+  now: { title: string; lead: string; note: string; link: string };
   stack: {
     title: string;
     lead: string;
@@ -212,6 +213,12 @@ export const content: Record<Locale, Content> = {
         },
       ],
     },
+    now: {
+      title: "No que estou mexendo",
+      lead: "Meus commits públicos mais recentes, direto do GitHub.",
+      note: "Boa parte do meu trabalho vive em repositório privado de empresa. O que dá para abrir está no",
+      link: "meu GitHub",
+    },
     stack: {
       title: "Ferramentas",
       lead: "O que uso todo dia:",
@@ -361,6 +368,12 @@ export const content: Record<Locale, Content> = {
           stack: ["MySQL", "MariaDB", "SQL"],
         },
       ],
+    },
+    now: {
+      title: "What I'm working on",
+      lead: "My latest public commits, straight from GitHub.",
+      note: "Much of my work lives in private company repositories. What can be opened is on",
+      link: "my GitHub",
     },
     stack: {
       title: "Tools",
