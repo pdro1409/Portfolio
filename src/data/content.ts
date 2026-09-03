@@ -5,16 +5,13 @@ export type Project = {
   title: string;
   /** Onde e quando: "Grupo Máquina de Vendas, 2026" */
   context: string;
-  /** Narrativa em primeira pessoa. Um a dois parágrafos. */
   story: string[];
   stack: string[];
   image: string;
   imageAlt: string;
-  /** Cor do painel atrás da tela. Puxada da própria interface do projeto. */
   accent: string;
   live?: string;
   repo?: string;
-  /** Preenchido quando o código é fechado, explicando o porquê. */
   closedSource?: string;
 };
 
