@@ -10,6 +10,8 @@ export type Project = {
   stack: string[];
   image: string;
   imageAlt: string;
+  /** Cor do painel atrás da tela. Puxada da própria interface do projeto. */
+  accent: string;
   live?: string;
   repo?: string;
   /** Preenchido quando o código é fechado, explicando o porquê. */
@@ -142,6 +144,7 @@ export const content: Record<Locale, Content> = {
           stack: ["TypeScript", "Node.js", "Express", "JWT", "RBAC", "PostgreSQL", "React", "Playwright"],
           image: "/assets/projects/crm-maquinia.png",
           imageAlt: "Tela do CRM MaquinIA",
+          accent: "#6d28d9",
           live: "https://os.maquinia.com.br/",
           closedSource: "Código fechado — é o produto interno da empresa.",
         },
@@ -156,6 +159,7 @@ export const content: Record<Locale, Content> = {
           stack: ["Next.js 16", "React 19", "TypeScript", "Supabase", "Zod", "Vitest"],
           image: "/assets/projects/d-a-leiloes.png",
           imageAlt: "Tela do D.A controle financeiro",
+          accent: "#15803d",
           repo: "https://github.com/pdro1409/d-a-leiloes",
         },
         {
@@ -169,6 +173,7 @@ export const content: Record<Locale, Content> = {
           stack: ["Next.js", "React", "Mapbox", "Zod", "Testing Library", "sharp"],
           image: "/assets/projects/sites-renderer.png",
           imageAlt: "Tela do Sites Renderer",
+          accent: "#4338ca",
           closedSource: "Código fechado — é o produto interno da empresa.",
         },
       ],
@@ -289,6 +294,7 @@ export const content: Record<Locale, Content> = {
           stack: ["TypeScript", "Node.js", "Express", "JWT", "RBAC", "PostgreSQL", "React", "Playwright"],
           image: "/assets/projects/crm-maquinia.png",
           imageAlt: "CRM MaquinIA screen",
+          accent: "#6d28d9",
           live: "https://os.maquinia.com.br/",
           closedSource: "Closed source — it is the company's internal product.",
         },
@@ -303,6 +309,7 @@ export const content: Record<Locale, Content> = {
           stack: ["Next.js 16", "React 19", "TypeScript", "Supabase", "Zod", "Vitest"],
           image: "/assets/projects/d-a-leiloes.png",
           imageAlt: "D.A financial control screen",
+          accent: "#15803d",
           repo: "https://github.com/pdro1409/d-a-leiloes",
         },
         {
@@ -316,6 +323,7 @@ export const content: Record<Locale, Content> = {
           stack: ["Next.js", "React", "Mapbox", "Zod", "Testing Library", "sharp"],
           image: "/assets/projects/sites-renderer.png",
           imageAlt: "Sites Renderer screen",
+          accent: "#4338ca",
           closedSource: "Closed source — it is the company's internal product.",
         },
       ],
