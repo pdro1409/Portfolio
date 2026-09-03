@@ -7,6 +7,13 @@ interface Props {
 
 const { locale } = Astro.props;
 const t = getContent(locale);
+
+// Os itens vêm do mais recente para o mais antigo: o primeiro é o cargo atual.
+const linha = t.experience.items.map((job, indice) => ({
+  job,
+  ehAtual: indice === 0,
+  ehUltimo: indice === t.experience.items.length - 1,
+}));
 ---
 
 <section id="trajetoria" class="px-6 py-16 md:px-10 md:py-24">
@@ -16,25 +23,54 @@ const t = getContent(locale);
     </h2>
     <p class="prosa mt-3">{t.experience.lead}</p>
 
-    <div class="mt-14">
+    <ol class="mt-14">
       {
-        t.experience.items.map((job) => (
-          <div class="grid gap-4 border-t border-paper-edge py-9 md:grid-cols-[17rem_1fr] md:gap-14">
-            <div>
-              <p class="text-sm text-ink-faint">{job.period}</p>
-              <h3 class="mt-1.5 font-semibold">{job.company}</h3>
-              <p class="mt-0.5 text-sm text-ink-soft">{job.role}</p>
-            </div>
+        linha.map(({ job, ehAtual, ehUltimo }) => (
+          <li>
+            {/*
+              Tudo mora dentro da coluna com a borda, para a régua seguir
+              contínua entre os itens. No desktop o período sai para a
+              esquerda por posicionamento absoluto, sem quebrar a linha.
+            */}
+            <div
+              class:list={[
+                "relative border-l border-paper-edge pl-8 md:ml-[12rem]",
+                ehUltimo ? "pb-0" : "pb-14",
+              ]}
+            >
+              <p
+                class:list={[
+                  "mb-1 text-sm md:absolute md:top-0.5 md:-left-[12rem] md:mb-0 md:w-[9.5rem] md:text-right",
+                  ehAtual ? "font-medium text-ink" : "text-ink-faint",
+                ]}
+              >
+                {job.period}
+              </p>
 
-            <div>
-              {job.story.map((paragrafo) => (
-                <p class="prosa mb-4 last:mb-0">{paragrafo}</p>
-              ))}
+              <span
+                class:list={[
+                  "absolute top-1.5 -left-[5.5px] h-2.5 w-2.5 rounded-full ring-4 ring-paper",
+                  ehAtual ? "bg-signal" : "bg-paper-edge",
+                ]}
+                aria-hidden="true"
+              />
+
+              <h3 class="text-lg font-semibold tracking-[-0.015em]">
+                {job.company}
+              </h3>
+              <p class="mt-0.5 text-sm text-ink-soft">{job.role}</p>
+
+              <div class="mt-4">
+                {job.story.map((paragrafo) => (
+                  <p class="prosa mb-4 last:mb-0">{paragrafo}</p>
+                ))}
+              </div>
+
               <p class="mt-4 text-sm text-ink-faint">{job.stack.join(", ")}</p>
             </div>
-          </div>
+          </li>
         ))
       }
-    </div>
+    </ol>
   </div>
 </section>
