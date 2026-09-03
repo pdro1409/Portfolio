@@ -16,6 +16,9 @@ export type Project = {
   closedSource?: string;
 };
 
+/** Uma tecnologia da vitrine. `icon` é o slug em /assets/icons/<slug>.svg. */
+export type Tech = { name: string; icon?: string };
+
 export type Job = {
   company: string;
   role: string;
@@ -48,9 +51,9 @@ export type Content = {
   stack: {
     title: string;
     lead: string;
-    primary: string[];
+    primary: Tech[];
     secondaryLead: string;
-    secondary: string[];
+    secondary: Tech[];
   };
   about: {
     title: string;
@@ -72,27 +75,28 @@ export const PROFILE = {
   source: "https://github.com/pdro1409/Portfolio",
 } as const;
 
-const PRIMARY_STACK = [
-  "TypeScript",
-  "React",
-  "Next.js",
-  "Node.js",
-  "NestJS",
-  "PostgreSQL",
-  "Supabase",
-  "Docker",
+const PRIMARY_STACK: Tech[] = [
+  { name: "TypeScript", icon: "ts-icon" },
+  { name: "React", icon: "react-icon" },
+  { name: "Next.js", icon: "next-icon" },
+  { name: "Node.js", icon: "node-icon" },
+  { name: "Express", icon: "express" },
+  { name: "NestJS", icon: "nestjs" },
+  { name: "PostgreSQL", icon: "postgresql" },
+  { name: "Docker", icon: "docker" },
 ];
 
-const SECONDARY_STACK = [
-  "PHP",
-  "Laravel",
-  "Python",
-  "MySQL",
-  "Redis",
-  "Astro",
-  "Tailwind",
-  "Playwright",
-  "Vitest",
+const SECONDARY_STACK: Tech[] = [
+  { name: "Redis", icon: "redis" },
+  { name: "Supabase", icon: "supabase" },
+  { name: "Astro", icon: "astro-icon" },
+  { name: "Tailwind", icon: "tailwind-icon" },
+  { name: "Playwright", icon: "playwright" },
+  { name: "Vitest", icon: "vitest" },
+  { name: "PHP", icon: "php-icon" },
+  { name: "Laravel", icon: "laravel" },
+  { name: "Python", icon: "python" },
+  { name: "MySQL", icon: "mysql" },
 ];
 
 export const content: Record<Locale, Content> = {
@@ -132,10 +136,10 @@ export const content: Record<Locale, Content> = {
           title: "CRM MaquinIA",
           context: "Grupo Máquina de Vendas, 2026",
           story: [
-            "A operação vivia em planilhas, uma por corretor, sem rastro do lead. Assumi o sistema que substituiu isso e fiz as duas pontas: modelo em PostgreSQL com Row Level Security, Edge Functions em Deno para o trabalho pesado, importador de carteiras em fases e a camada de IA que conduz o atendimento.",
-            "Mais de 200 clientes usam todo dia. Cobri o caminho crítico com Playwright e testes no banco — aqui um erro de permissão vaza dado de um cliente para outro.",
+            "A operação vivia em planilhas, uma por corretor, sem rastro do lead. Assumi o sistema que substituiu isso e fiz as duas pontas: API em Node com Express, autenticação por JWT e controle de acesso por papel aplicado no próprio PostgreSQL, consultas tipadas com Kysely, importador de carteiras em fases e a camada de IA que conduz o atendimento.",
+            "Mais de 200 clientes usam todo dia. Cobri o caminho crítico com Playwright, testes de integração da API e testes no banco — aqui um erro de permissão vaza dado de um cliente para outro.",
           ],
-          stack: ["TypeScript", "React", "Supabase", "PostgreSQL", "Deno", "Playwright"],
+          stack: ["TypeScript", "Node.js", "Express", "JWT", "RBAC", "PostgreSQL", "React", "Playwright"],
           image: "/assets/projects/crm-maquinia.png",
           imageAlt: "Tela do CRM MaquinIA",
           live: "https://os.maquinia.com.br/",
@@ -178,10 +182,10 @@ export const content: Record<Locale, Content> = {
           role: "Desenvolvedor de software júnior",
           period: "jan 2026 — hoje",
           story: [
-            "Respondo pela arquitetura e pelo desenvolvimento do CRM da empresa, do banco à interface. Desenhei o modelo em PostgreSQL com Row Level Security, escrevi a camada de IA que conduz o atendimento e estruturei filas e cache em Redis para o sistema aguentar o crescimento.",
+            "Respondo pela arquitetura e pelo desenvolvimento do CRM da empresa, do banco à interface. Escrevi a API em Node e Express com autenticação JWT e controle de acesso por papel no PostgreSQL, montei a camada de IA que conduz o atendimento e estruturei filas e cache em Redis para o sistema aguentar o crescimento.",
             "Conduzo os módulos críticos de forma independente, documentando as decisões em System Design Documents antes de escrever código. Padronizei os ambientes em Docker.",
           ],
-          stack: ["Next.js", "TypeScript", "Supabase", "PostgreSQL", "Redis", "Docker"],
+          stack: ["Node.js", "Express", "TypeScript", "PostgreSQL", "Redis", "Docker"],
         },
         {
           company: "BecoDiagonal",
@@ -279,10 +283,10 @@ export const content: Record<Locale, Content> = {
           title: "CRM MaquinIA",
           context: "Grupo Máquina de Vendas, 2026",
           story: [
-            "The business ran on spreadsheets: one per agent, no trace of a lead, no way to know what had been done. I took on building the system that replaced it, and I built both ends — designed the PostgreSQL data model with Row Level Security to keep every client isolated, wrote the Deno Edge Functions that push heavy work out of the request, and built a phased portfolio importer so a large migration can resume instead of starting over.",
-            "The AI layer I wrote drives the customer conversation, and it is what saves users the most time today. I covered the critical path with Playwright end-to-end tests and tests against the database itself, because a permission bug here leaks one client's data into another's. More than 200 clients use it daily.",
+            "The business ran on spreadsheets, one per agent, no trace of a lead. I took on the system that replaced it and built both ends: a Node and Express API, JWT authentication with role-based access enforced inside PostgreSQL itself, typed queries through Kysely, a phased portfolio importer, and the AI layer that drives the conversation.",
+            "More than 200 clients use it daily. I covered the critical path with Playwright, API integration tests and tests against the database itself, because a permission bug here leaks one client's data into another's.",
           ],
-          stack: ["TypeScript", "React", "Supabase", "PostgreSQL", "Deno", "Playwright"],
+          stack: ["TypeScript", "Node.js", "Express", "JWT", "RBAC", "PostgreSQL", "React", "Playwright"],
           image: "/assets/projects/crm-maquinia.png",
           imageAlt: "CRM MaquinIA screen",
           live: "https://os.maquinia.com.br/",
@@ -325,10 +329,10 @@ export const content: Record<Locale, Content> = {
           role: "Junior software developer",
           period: "Jan 2026 — present",
           story: [
-            "I own the architecture and development of the company's CRM, from the database to the interface. I designed the PostgreSQL model with Row Level Security, wrote the AI layer that drives customer service, and structured queues and Redis caching so the system holds up as it grows.",
+            "I own the architecture and development of the company's CRM, from the database to the interface. I wrote the Node and Express API with JWT authentication and role-based access enforced in PostgreSQL, built the AI layer that drives customer service, and structured queues and Redis caching so the system holds up as it grows.",
             "I lead the critical modules independently, writing System Design Documents before writing code. I standardized environments on Docker.",
           ],
-          stack: ["Next.js", "TypeScript", "Supabase", "PostgreSQL", "Redis", "Docker"],
+          stack: ["Node.js", "Express", "TypeScript", "PostgreSQL", "Redis", "Docker"],
         },
         {
           company: "BecoDiagonal",
