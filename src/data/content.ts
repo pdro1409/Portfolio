@@ -184,7 +184,7 @@ export const content: Record<Locale, Content> = {
       items: [
         {
           company: "Grupo Máquina de Vendas",
-          role: "Desenvolvedor de software júnior",
+          role: "Desenvolvedor de software pleno",
           period: "jan 2026 — hoje",
           story: [
             "Respondo pela arquitetura e pelo desenvolvimento do CRM da empresa, do banco à interface. Escrevi a API em Node e Express com autenticação JWT e controle de acesso por papel no PostgreSQL, montei a camada de IA que conduz o atendimento e estruturei filas e cache em Redis para o sistema aguentar o crescimento.",
@@ -334,7 +334,7 @@ export const content: Record<Locale, Content> = {
       items: [
         {
           company: "Grupo Máquina de Vendas",
-          role: "Junior software developer",
+          role: "Mid-level software developer",
           period: "Jan 2026 — present",
           story: [
             "I own the architecture and development of the company's CRM, from the database to the interface. I wrote the Node and Express API with JWT authentication and role-based access enforced in PostgreSQL, built the AI layer that drives customer service, and structured queues and Redis caching so the system holds up as it grows.",
