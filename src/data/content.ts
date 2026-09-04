@@ -68,7 +68,7 @@ export type Content = {
 export const PROFILE = {
   name: "Pedro Augusto",
   email: "panuness1010@gmail.com",
-  linkedin: "https://www.linkedin.com/in/pdro1409/",
+  linkedin: "https://www.linkedin.com/in/pdro1409p/",
   github: "https://github.com/pdro1409",
   resume: "/curriculo-pedro-augusto.pdf",
   domain: "https://devpdro.com.br",
@@ -143,7 +143,7 @@ export const content: Record<Locale, Content> = {
           image: "/assets/projects/crm-maquinia.png",
           imageAlt: "Tela do CRM MaquinIA",
           accent: "#6d28d9",
-          live: "https://os.maquinia.com.br/",
+          live: "https://app.maquinia.com.br/",
           closedSource: "Código fechado — é o produto interno da empresa.",
         },
         {
@@ -172,6 +172,7 @@ export const content: Record<Locale, Content> = {
           image: "/assets/projects/sites-renderer.png",
           imageAlt: "Tela do Sites Renderer",
           accent: "#4338ca",
+          live: "https://exemplo.app.maquinia.com.br/",
           closedSource: "Código fechado — é o produto interno da empresa.",
         },
       ],
